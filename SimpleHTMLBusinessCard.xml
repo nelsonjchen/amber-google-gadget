@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+<ModulePrefs
+  title="Simple BusinessCard"
+  description="Displays a simple HTML Business Card"
+  author="Lisa-Marie Thompson , modded by Nelson Chen"
+  author_affiliation="None"
+  author_email="crazysim@gmail.com"
+  screenshot=""
+  height="148"
+  width="400">
+<Require feature="dynamic-height"/>
+</ModulePrefs>
+<UserPref name="fullName" display_name="Full Name" required="false" default_value="John Smith"/>
+<UserPref name="jobTitle" display_name="Job Title" required="false" default_value="Job titel"/>
+<UserPref name="mobNr" display_name="Mobile Nr" required="false" default_value="555 555 5555"/>
+<UserPref name="emailAddress" display_name="Email Address" required="false" default_value="john@smith.com" />
+<UserPref name="myphoto" display_name="Photo" default_value="http://doc.examples.googlepages.com/rowan-headshot.jpg"/>
+<UserPref name="font" display_name="Font" default_value="Ariel Sans-Serif" datatype="enum" >
+    <EnumValue value="Ariel Sans-Serif" />
+     <EnumValue value="Curier New" />
+     <EnumValue value="Georgia" />
+     <EnumValue value="Times New Roman" />
+     <EnumValue value="Trebuchet" />
+     <EnumValue value="Verdana" />
+   </UserPref>
+
+  <Content type="html"><![CDATA[
+<div id="content_div"></div>
+<div id="debug_div" style="font-size:9pt; padding:5px; color: red;"></div>
+
+  <script type="text/javascript">
+  // Get userprefs
+  var prefs = new gadgets.Prefs();
+
+  // debug flag. When its value is non-zero, debugging messages are displayed
+  var debug = 1;
+  // The string containing debugging messages
+  var debug_html = "";
+
+function init(){
+
+  // DEBUG: is the function getting called?
+  print("In displayDate function<br>");
+  
+  var htmlFirst = '<table width="350" cellspacing="0" cellpadding="0"><tbody><tr>';
+  var htmlTD1 = '<td width="270" valign="bottom" style="border: 1px solid rgb(199, 199, 199); padding: 5px; background-color: rgb(255, 255, 255);"> ';
+  var htmlFont = ''; 
+    //'<font face="' + prefs.getString('font') +'">'  ;
+  var htmlContactInfo = '';
+  var htmlTD2 = '</font></td><td id="ContactPhoto" width="80" valign="top" style="border: 1px solid rgb(199, 199, 199); padding: 5px; background-color: rgb(237, 237, 237);font-family:verdana; font-size:12px;">';
+  var htmlPhoto = '';
+  var htmlEnd = '</td></tr></tbody></table>';
+
+  // Get element by id
+  var element = document.getElementById('content_div');
+  
+  htmlContactInfo = "<h2 style='color: #5A5F5A; font-family:verdana;'>" +
+  prefs.getString("fullName") + "</h2><strong>" +
+  prefs.getString("jobTitle") + "</strong><br /><i>" +
+  prefs.getString("mobNr") + "</i><br /><a href='http://a' rel='nofollow'>" +
+  prefs.getString("emailAddress") + "</a><br />";
+
+  htmlPhoto = '<img height="135" border="0" alt="" src="' +
+  prefs.getString("myphoto") + '"/>';
+
+  // Display HTML
+  element.innerHTML = htmlFirst + htmlTD1 + htmlFont + htmlContactInfo + htmlTD2 + htmlPhoto + htmlEnd;
+}
+
+
+// Outputs debug messages if debug flag has a non-zero value
+function print(msg) {
+  if (debug) {
+    debug_html += msg;
+    // Write debug HTML to div
+    document.getElementById('debug_div').innerHTML = debug_html;
+    }
+}
+
+_IG_RegisterOnloadHandler(init);
+
+</script>
+]]>
+</Content>
+</Module>
+
