@@ -8,7 +8,7 @@
   author_email="crazysim@gmail.com"
   screenshot=""
   height="148"
-  width="400">
+  width="350">
 <Require feature="dynamic-height"/>
 </ModulePrefs>
 <UserPref name="fullName" display_name="Full Name" required="false" default_value="John Smith"/>
